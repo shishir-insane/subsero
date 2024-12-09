@@ -14,8 +14,8 @@ import Blog from "@/components/Blog";
 import Testimonial from "@/components/Testimonial";
 
 export const metadata = {
-  title: "SubSero | Simplify Subscription Management",
-  description: "Track and optimize your subscriptions with SubSero.",
+  title: "subsero | Simplify Subscription Management",
+  description: "Take control of your subscriptions with subsero. Track renewals, save money, and avoid hidden charges effortlessly. Manage all your subscriptions in one secure platform.",
 };
 
 export default function Home() {

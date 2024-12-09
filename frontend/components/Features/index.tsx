@@ -13,8 +13,8 @@ const Feature = () => {
           {/* <!-- Section Title Start --> */}
           <SectionHeader
             headerInfo={{
-              title: "Why Choose subsero?",
-              subtitle: "Core Features of subsero",
+              title: "Why Choose SubSero for Subscription Management?",
+              subtitle: "Core Features",
               description: `subsero is designed to make subscription management 
               effortless and effective. From tracking renewals to saving money, 
               our platform offers comprehensive tools to simplify your life and 
