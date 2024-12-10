@@ -1,1 +1,3 @@
 .vscode/settings.json
+backend/.env
+backend/src/main/resources/liquibase.properties

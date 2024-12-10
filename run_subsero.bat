@@ -3,7 +3,8 @@ echo Starting SubSero Application...
 
 :: Start Backend
 echo Starting Backend...
-start cmd /k "cd backend && gradlew bootRun"
+for /f "delims=" %%i in ("backend/.env") do set %%i
+start cmd /k "cd backend && mvn spring-boot:run"
 
 :: Start Frontend
 echo Starting Frontend...

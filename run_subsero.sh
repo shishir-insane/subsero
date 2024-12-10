@@ -4,6 +4,7 @@ echo "Starting SubSero Application..."
 
 # Start Backend
 echo "Starting Backend..."
+export $(cat backend/.env | xargs)
 gnome-terminal -- bash -c "cd backend && ./gradlew bootRun; exec bash"
 
 # Start Frontend

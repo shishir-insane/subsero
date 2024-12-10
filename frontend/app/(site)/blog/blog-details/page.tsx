@@ -114,7 +114,7 @@ const SingleBlogPage = async () => {
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                     Nunc quis nibh lorem. Duis sed odio lorem. In a efficitur
                     leo. Ut venenatis rhoncus quam sed condimentum. Curabitur
-                    vel turpis in dolor volutpat imperdiet in ut mi. Integer non
+                    vel turpis in dolor volutpat imperdiet in ut mi. Long non
                     volutpat nulla. Nunc elementum elit viverra, tempus quam
                     non, interdum ipsum.
                   </p>
@@ -153,7 +153,7 @@ const SingleBlogPage = async () => {
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                     Nunc quis nibh lorem. Duis sed odio lorem. In a efficitur
                     leo. Ut venenatis rhoncus quam sed condimentum. Curabitur
-                    vel turpis in dolor volutpat imperdiet in ut mi. Integer non
+                    vel turpis in dolor volutpat imperdiet in ut mi. Long non
                     volutpat nulla. Nunc elementum elit viverra, tempus quam
                     non, interdum ipsum.
                   </p>

@@ -1,0 +1,301 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet author="subser-dba" id="subser-dba-1">
+        <createTable tableName="analytics">
+            <column name="total_annual_cost" type="DECIMAL(12, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="total_monthly_cost" type="DECIMAL(12, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="updated_at" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="least_used_subscription" type="VARCHAR(100)"/>
+            <column name="most_expensive_subscription" type="VARCHAR(100)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="subser-dba" id="subser-dba-2">
+        <createTable tableName="currencies">
+            <column name="code" type="VARCHAR(3)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="exchange_rate" type="DECIMAL(14, 4)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="symbol" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="subser-dba" id="subser-dba-3">
+        <createTable tableName="notifications">
+            <column name="created_at" type="datetime"/>
+            <column name="created_at" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="updated_at" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="reminder_date" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="subscription_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="message" type="LONGTEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="method" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="priority" type="VARCHAR(255)"/>
+            <column name="status" type="VARCHAR(255)"/>
+            <column name="type" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="subser-dba" id="subser-dba-4">
+        <createTable tableName="payments">
+            <column name="amount" type="DECIMAL(12, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="currency_code_id" type="VARCHAR(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="datetime"/>
+            <column name="created_at" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="updated_at" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="payment_date" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="subscription_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="payment_method" type="VARCHAR(50)"/>
+            <column name="status" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="subser-dba" id="subser-dba-5">
+        <createTable tableName="subscription_categories">
+            <column name="created_at" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="updated_at" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="icon" type="VARCHAR(100)"/>
+            <column name="description" type="LONGTEXT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="subser-dba" id="subser-dba-6">
+        <createTable tableName="subscriptions">
+            <column name="cost" type="DECIMAL(12, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="currency_code_id" type="VARCHAR(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_active" type="TINYINT(3)"/>
+            <column name="renewal_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="category_id" type="BIGINT"/>
+            <column name="created_at" type="datetime"/>
+            <column name="created_at" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="updated_at" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="datetime"/>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="payment_method" type="VARCHAR(50)"/>
+            <column name="name" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="billing_cycle" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="LONGTEXT"/>
+            <column name="website_url" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="subser-dba" id="subser-dba-7">
+        <createTable tableName="user_subscription_analytics">
+            <column name="potential_savings" type="DECIMAL(12, 2)"/>
+            <column name="total_annual_cost" type="DECIMAL(12, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="total_monthly_cost" type="DECIMAL(12, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="active_subscriptions" type="BIGINT"/>
+            <column name="created_at" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="updated_at" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="total_subscriptions" type="BIGINT"/>
+            <column name="updated_at" type="datetime"/>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="least_used_subscription" type="VARCHAR(100)"/>
+            <column name="most_expensive_subscription" type="VARCHAR(100)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="subser-dba" id="subser-dba-8">
+        <createTable tableName="users">
+            <column name="preferred_currency_id" type="VARCHAR(3)"/>
+            <column name="created_at" type="datetime"/>
+            <column name="created_at" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="last_login" type="datetime"/>
+            <column name="updated_at" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="datetime"/>
+            <column name="timezone" type="VARCHAR(50)"/>
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password_hash" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="subser-dba" id="subser-dba-9">
+        <createIndex indexName="FK9y21adhxn0ayjhfocscqox7bh" tableName="notifications">
+            <column name="user_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="subser-dba" id="subser-dba-10">
+        <createIndex indexName="FKa3xnf2o6mt8cqbewvq2ouq3rq" tableName="payments">
+            <column name="subscription_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="subser-dba" id="subser-dba-11">
+        <createIndex indexName="FKcb0bonn9xv2h9ej4xmgh0n1n3" tableName="subscriptions">
+            <column name="currency_code_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="subser-dba" id="subser-dba-12">
+        <createIndex indexName="FKd4qse0dhnbkufo174tls48w1s" tableName="users">
+            <column name="preferred_currency_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="subser-dba" id="subser-dba-13">
+        <createIndex indexName="FKdwynqghnn0h6hahq61w272wue" tableName="subscriptions">
+            <column name="category_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="subser-dba" id="subser-dba-14">
+        <createIndex indexName="FKe782fmwh46b2q4f9gm1wpr7w4" tableName="notifications">
+            <column name="subscription_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="subser-dba" id="subser-dba-15">
+        <createIndex indexName="FKglo46si45o538qnvypddmlogn" tableName="payments">
+            <column name="currency_code_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="subser-dba" id="subser-dba-16">
+        <createIndex indexName="FKhro52ohfqfbay9774bev0qinr" tableName="subscriptions">
+            <column name="user_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="subser-dba" id="subser-dba-17">
+        <createIndex indexName="FKj94hgy9v5fw1munb90tar2eje" tableName="payments">
+            <column name="user_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="subser-dba" id="subser-dba-18">
+        <createIndex indexName="FKpu7fy6nkoxy9h8vt9twrdtwkf" tableName="user_subscription_analytics">
+            <column name="user_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="subser-dba" id="subser-dba-19">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="notifications" constraintName="FK9y21adhxn0ayjhfocscqox7bh" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="users" validate="true"/>
+    </changeSet>
+    <changeSet author="subser-dba" id="subser-dba-20">
+        <addForeignKeyConstraint baseColumnNames="subscription_id" baseTableName="payments" constraintName="FKa3xnf2o6mt8cqbewvq2ouq3rq" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="subscriptions" validate="true"/>
+    </changeSet>
+    <changeSet author="subser-dba" id="subser-dba-21">
+        <addForeignKeyConstraint baseColumnNames="currency_code_id" baseTableName="subscriptions" constraintName="FKcb0bonn9xv2h9ej4xmgh0n1n3" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="code" referencedTableName="currencies" validate="true"/>
+    </changeSet>
+    <changeSet author="subser-dba" id="subser-dba-22">
+        <addForeignKeyConstraint baseColumnNames="preferred_currency_id" baseTableName="users" constraintName="FKd4qse0dhnbkufo174tls48w1s" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="code" referencedTableName="currencies" validate="true"/>
+    </changeSet>
+    <changeSet author="subser-dba" id="subser-dba-23">
+        <addForeignKeyConstraint baseColumnNames="category_id" baseTableName="subscriptions" constraintName="FKdwynqghnn0h6hahq61w272wue" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="subscription_categories" validate="true"/>
+    </changeSet>
+    <changeSet author="subser-dba" id="subser-dba-24">
+        <addForeignKeyConstraint baseColumnNames="subscription_id" baseTableName="notifications" constraintName="FKe782fmwh46b2q4f9gm1wpr7w4" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="subscriptions" validate="true"/>
+    </changeSet>
+    <changeSet author="subser-dba" id="subser-dba-25">
+        <addForeignKeyConstraint baseColumnNames="currency_code_id" baseTableName="payments" constraintName="FKglo46si45o538qnvypddmlogn" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="code" referencedTableName="currencies" validate="true"/>
+    </changeSet>
+    <changeSet author="subser-dba" id="subser-dba-26">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="subscriptions" constraintName="FKhro52ohfqfbay9774bev0qinr" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="users" validate="true"/>
+    </changeSet>
+    <changeSet author="subser-dba" id="subser-dba-27">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="payments" constraintName="FKj94hgy9v5fw1munb90tar2eje" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="users" validate="true"/>
+    </changeSet>
+    <changeSet author="subser-dba" id="subser-dba-28">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="user_subscription_analytics" constraintName="FKpu7fy6nkoxy9h8vt9twrdtwkf" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="id" referencedTableName="users" validate="true"/>
+    </changeSet>
+</databaseChangeLog>

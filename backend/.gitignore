@@ -1,11 +1,21 @@
 HELP.md
-.gradle
-build/
-!gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**/build/
-!**/src/test/**/build/
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+application-local.yml
+*.log
 
-### STS ###
+## IntelliJ IDEA
+.idea
+*.iws
+*.iml
+*.ipr
+
+## VS Code
+.vscode/
+
+## STS
 .apt_generated
 .classpath
 .factorypath
@@ -13,25 +23,13 @@ build/
 .settings
 .springBeans
 .sts4-cache
-bin/
-!**/src/main/**/bin/
-!**/src/test/**/bin/
 
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
-out/
-!**/src/main/**/out/
-!**/src/test/**/out/
-
-### NetBeans ###
+## NetBeans
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
 /.nb-gradle/
-
-### VS Code ###
-.vscode/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
