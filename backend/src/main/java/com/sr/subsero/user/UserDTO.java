@@ -19,7 +19,7 @@ public class UserDTO {
 
     @NotNull
     @Size(max = 255)
-    private String passwordHash;
+    private String password;
 
     @Size(max = 50)
     private String timezone;

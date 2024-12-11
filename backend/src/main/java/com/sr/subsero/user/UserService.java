@@ -14,6 +14,7 @@ import com.sr.subsero.util.NotFoundException;
 import com.sr.subsero.util.ReferencedWarning;
 import java.util.List;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -26,19 +27,22 @@ public class UserService {
     private final NotificationRepository notificationRepository;
     private final UserSubscriptionAnalyticRepository userSubscriptionAnalyticRepository;
     private final PaymentRepository paymentRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public UserService(final UserRepository userRepository,
             final CurrencyRepository currencyRepository,
             final SubscriptionRepository subscriptionRepository,
             final NotificationRepository notificationRepository,
             final UserSubscriptionAnalyticRepository userSubscriptionAnalyticRepository,
-            final PaymentRepository paymentRepository) {
+            final PaymentRepository paymentRepository,
+            final PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.currencyRepository = currencyRepository;
         this.subscriptionRepository = subscriptionRepository;
         this.notificationRepository = notificationRepository;
         this.userSubscriptionAnalyticRepository = userSubscriptionAnalyticRepository;
         this.paymentRepository = paymentRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<UserDTO> findAll() {
@@ -74,7 +78,7 @@ public class UserService {
     private UserDTO mapToDTO(final User user, final UserDTO userDTO) {
         userDTO.setId(user.getId());
         userDTO.setEmail(user.getEmail());
-        userDTO.setPasswordHash(user.getPasswordHash());
+        // userDTO.setPassword(user.getPasswordHash());
         userDTO.setTimezone(user.getTimezone());
         userDTO.setCreatedAt(user.getCreatedAt());
         userDTO.setUpdatedAt(user.getUpdatedAt());
@@ -85,7 +89,7 @@ public class UserService {
 
     private User mapToEntity(final UserDTO userDTO, final User user) {
         user.setEmail(userDTO.getEmail());
-        user.setPasswordHash(userDTO.getPasswordHash());
+        user.setPasswordHash(passwordEncoder.encode(userDTO.getPassword()));
         user.setTimezone(userDTO.getTimezone());
         user.setCreatedAt(userDTO.getCreatedAt());
         user.setUpdatedAt(userDTO.getUpdatedAt());
