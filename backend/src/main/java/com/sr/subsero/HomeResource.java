@@ -9,7 +9,7 @@ public class HomeResource {
 
     @GetMapping("/")
     public String index() {
-        return "\"subsero is running!\"";
+        return "subsero is running!";
     }
 
 }

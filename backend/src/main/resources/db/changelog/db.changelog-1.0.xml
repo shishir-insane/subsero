@@ -313,4 +313,42 @@
 	<changeSet author="subser-dba" id="subser-dba-32">
 		<tagDatabase tag="v1.0"/>
 	</changeSet>
+	<changeSet author="subser-dba" id="subser-dba-33">
+        <createTable tableName="roles">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(50)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+	<changeSet author="subser-dba" id="subser-dba-34">
+        <createTable tableName="user_roles">
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        
+        <addPrimaryKey tableName="user_roles" columnNames="user_id,role_id" constraintName="pk_user_roles"/>
+
+        <addForeignKeyConstraint 
+            baseTableName="user_roles" 
+            baseColumnNames="user_id" 
+            constraintName="fk_user_roles_user" 
+            referencedTableName="users" 
+            referencedColumnNames="id"
+            onDelete="CASCADE"/>
+
+        <addForeignKeyConstraint 
+            baseTableName="user_roles" 
+            baseColumnNames="role_id" 
+            constraintName="fk_user_roles_role" 
+            referencedTableName="roles" 
+            referencedColumnNames="id"
+            onDelete="CASCADE"/>
+    </changeSet>
 </databaseChangeLog>

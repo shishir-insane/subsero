@@ -12,8 +12,9 @@ import com.sr.subsero.user_subscription_analytic.UserSubscriptionAnalytic;
 import com.sr.subsero.user_subscription_analytic.UserSubscriptionAnalyticRepository;
 import com.sr.subsero.util.NotFoundException;
 import com.sr.subsero.util.ReferencedWarning;
+
+import java.util.Collections;
 import java.util.List;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,7 @@ public class UserService {
     private final UserSubscriptionAnalyticRepository userSubscriptionAnalyticRepository;
     private final PaymentRepository paymentRepository;
     private final PasswordEncoder passwordEncoder;
+    private final RoleRepository roleRepository;
 
     public UserService(final UserRepository userRepository,
             final CurrencyRepository currencyRepository,
@@ -35,7 +37,8 @@ public class UserService {
             final NotificationRepository notificationRepository,
             final UserSubscriptionAnalyticRepository userSubscriptionAnalyticRepository,
             final PaymentRepository paymentRepository,
-            final PasswordEncoder passwordEncoder) {
+            final PasswordEncoder passwordEncoder, 
+            final RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.currencyRepository = currencyRepository;
         this.subscriptionRepository = subscriptionRepository;
@@ -43,10 +46,11 @@ public class UserService {
         this.userSubscriptionAnalyticRepository = userSubscriptionAnalyticRepository;
         this.paymentRepository = paymentRepository;
         this.passwordEncoder = passwordEncoder;
+        this.roleRepository = roleRepository;
     }
 
     public List<UserDTO> findAll() {
-        final List<User> users = userRepository.findAll(Sort.by("id"));
+        final List<User> users = userRepository.findAll();
         return users.stream()
                 .map(user -> mapToDTO(user, new UserDTO()))
                 .toList();
@@ -61,6 +65,12 @@ public class UserService {
     public Long create(final UserDTO userDTO) {
         final User user = new User();
         mapToEntity(userDTO, user);
+
+        // Assign the default role (ROLE_USER)
+        Role userRole = roleRepository.findByName(RoleEnum.ROLE_USER)
+                .orElseThrow(() -> new RuntimeException("Error: Role not found."));
+                user.setRoles(Collections.singleton(userRole));
+
         return userRepository.save(user).getId();
     }
 
@@ -78,7 +88,7 @@ public class UserService {
     private UserDTO mapToDTO(final User user, final UserDTO userDTO) {
         userDTO.setId(user.getId());
         userDTO.setEmail(user.getEmail());
-        // userDTO.setPassword(user.getPasswordHash());
+        // userDTO.setPassword(user.getPasswordHash()); // Do not return password
         userDTO.setTimezone(user.getTimezone());
         userDTO.setCreatedAt(user.getCreatedAt());
         userDTO.setUpdatedAt(user.getUpdatedAt());
@@ -88,14 +98,18 @@ public class UserService {
     }
 
     private User mapToEntity(final UserDTO userDTO, final User user) {
+        if (userDTO.getPassword() != null && !userDTO.getPassword().isEmpty()) {
+            user.setPasswordHash(passwordEncoder.encode(userDTO.getPassword()));
+        }
         user.setEmail(userDTO.getEmail());
         user.setPasswordHash(passwordEncoder.encode(userDTO.getPassword()));
         user.setTimezone(userDTO.getTimezone());
         user.setCreatedAt(userDTO.getCreatedAt());
-        user.setUpdatedAt(userDTO.getUpdatedAt());
-        user.setLastLogin(userDTO.getLastLogin());
-        final Currency preferredCurrency = userDTO.getPreferredCurrency() == null ? null : currencyRepository.findById(userDTO.getPreferredCurrency())
-                .orElseThrow(() -> new NotFoundException("preferredCurrency not found"));
+        Currency preferredCurrency = null;
+        if (userDTO.getPreferredCurrency() != null) {
+            preferredCurrency = currencyRepository.findById(userDTO.getPreferredCurrency())
+                    .orElseThrow(() -> new NotFoundException("preferredCurrency not found"));
+        }
         user.setPreferredCurrency(preferredCurrency);
         return user;
     }
@@ -130,5 +144,4 @@ public class UserService {
         }
         return null;
     }
-
 }

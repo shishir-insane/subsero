@@ -7,4 +7,6 @@
 
     <include file="db/changelog/db.changelog-1.0.xml"/>
 
+    <include file="db/changelog/db.changelog-insert-admin-user.xml"/>
+
 </databaseChangeLog>

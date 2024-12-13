@@ -35,3 +35,7 @@ error:
       CurrencyCodeValid: CURRENCY_CODE_VALID
 springdoc:
   pathsToMatch: /, /api/**
+
+subsero:
+  app:
+    jwtSecret: ${JWT_SECRET}

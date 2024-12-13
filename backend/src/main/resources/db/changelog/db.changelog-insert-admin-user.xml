@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd">
+
+    <!-- Insert roles into roles table -->
+    <changeSet id="4-insert-roles" author="subser-dba">
+        <insert tableName="roles">
+            <column name="id" value="1"/>
+            <column name="name" value="ROLE_USER"/>
+        </insert>
+        <insert tableName="roles">
+            <column name="id" value="2"/>
+            <column name="name" value="ROLE_ADMIN"/>
+        </insert>
+    </changeSet>
+
+    <!-- Insert admin user into users table -->
+    <changeSet id="5-insert-admin-user" author="subser-dba">
+        <insert tableName="users">
+            <column name="id" value="1"/>
+            <column name="username" value="admin"/>
+            <column name="password" value="$2a$10$4eIoH2EqxX0MzDh4Jg8L.e.gYXngbVup7ZJLRP3msAPr3u4z4Pd2a"/>
+            <column name="created_at" valueDate="2024-12-11T00:00:00"/>
+            <column name="updated_at" valueDate="2024-12-11T00:00:00"/>
+        </insert>
+    </changeSet>
+
+    <!-- Assign admin user to admin role in user_roles table -->
+    <changeSet id="6-assign-admin-role" author="subser-dba">
+        <insert tableName="user_roles">
+            <column name="user_id" value="1"/>
+            <column name="role_id" value="2"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
