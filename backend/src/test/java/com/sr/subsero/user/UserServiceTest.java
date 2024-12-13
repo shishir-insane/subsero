@@ -81,18 +81,19 @@ public class UserServiceTest {
     @Test
     @Transactional
     public void testFindById() {
-        User user1 = new User();
-        user1.setId(1L);
-        user1.setEmail("testuser@mail.com");
-        user1.setPasswordHash(passwordEncoder.encode("password"));
-        userRepository.save(user1);
+        userService.delete(1L);
+        
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(1L);
+        userDTO.setEmail("test@test.com");
+        userDTO.setPassword("testpassword");
 
-        userRepository.findById(1L).orElse(null);
+        var id = userService.create(userDTO);
 
-        UserDTO result = userService.get(1L);
+        UserDTO result = userService.get(id);
 
         assertNotNull(result);
-        assertEquals(1L, result.getId());
+        assertEquals(id, result.getId());
     }
 
     @Test
@@ -117,20 +118,15 @@ public class UserServiceTest {
     @Test
     public void testUpdate() {
         Long userId = 1L;
-        User user1 = new User();
-        user1.setId(userId);
-        user1.setEmail("testuser@mail.com");
-        user1.setPasswordHash(passwordEncoder.encode("password"));
-        user1 = userRepository.save(user1);
         
         UserDTO userDTO = new UserDTO();
-        userDTO.setEmail(user1.getEmail());
-        userDTO.setPassword(user1.getPasswordHash());
-        userDTO.setId(user1.getId());
+        userDTO.setEmail("testuser@mail.com");
+        userDTO.setPassword("password");
+        userDTO.setId(userId);
 
-        userService.create(userDTO);
-
-        assertDoesNotThrow(() -> userService.update(userId, userDTO));
+        var id = userService.create(userDTO);
+        
+        assertDoesNotThrow(() -> userService.update(id, userDTO));
     }
 
     @Test
@@ -149,17 +145,12 @@ public class UserServiceTest {
     @Transactional
     public void testDelete() {
         Long userId = 1L;
-        
-        User user1 = new User();
-        user1.setEmail("testuser@mail.com");
-        user1.setId(userId);
-        user1.setPasswordHash(passwordEncoder.encode("password"));
-        userRepository.save(user1);
 
-        User user2 = new User();
-        user2.setEmail("testuser@mail.com");
-        user2.setPasswordHash(passwordEncoder.encode("password"));
-        userRepository.save(user2);
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(userId);
+        userDTO.setEmail("test@test.com");
+        userDTO.setPassword("testpassword");
+        userService.create(userDTO);
 
         assertDoesNotThrow(() -> userService.delete(userId));
         assertNull(userRepository.findById(userId).orElse(null));

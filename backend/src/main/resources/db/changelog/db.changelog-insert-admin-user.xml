@@ -21,8 +21,8 @@
     <changeSet id="5-insert-admin-user" author="subser-dba">
         <insert tableName="users">
             <column name="id" value="1"/>
-            <column name="username" value="admin"/>
-            <column name="password" value="$2a$10$4eIoH2EqxX0MzDh4Jg8L.e.gYXngbVup7ZJLRP3msAPr3u4z4Pd2a"/>
+            <column name="email" value="admin@subsero.com"/>
+            <column name="password_hash" value="$2a$10$E2p8REvIfVzViLPkWr2ntu2uSSSEqg4uZ5rzsWta3RaxirThzB7Gq"/>
             <column name="created_at" valueDate="2024-12-11T00:00:00"/>
             <column name="updated_at" valueDate="2024-12-11T00:00:00"/>
         </insert>
