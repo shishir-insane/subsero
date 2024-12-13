@@ -154,10 +154,10 @@ const Header = () => {
             <ThemeToggler />
 
             <Link
-              href="https://github.com/NextJSTemplates/solid-nextjs"
-              className="flex rounded-full bg-black px-7.5 py-2.5 text-white duration-300 ease-in-out hover:bg-blackho dark:bg-btndark dark:hover:bg-blackho"
+              href="/auth/signin"
+              className="text-regular font-medium text-waterloo hover:text-primary"
             >
-              Login 🌟
+              Login
             </Link>
 
             <Link
