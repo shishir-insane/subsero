@@ -9,6 +9,44 @@ const Signin = () => {
     email: "",
     password: "",
   });
+  const [error, setError] = useState("");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setData({
+      ...data,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error("Login failed");
+      }
+
+      const result = await response.json();
+      const token = result.token;
+
+      // Store the token in local storage or cookies
+      localStorage.setItem("token", token);
+
+      // Redirect to a protected route or update the UI
+      console.log("Login successful", token);
+    } catch (error) {
+      setError("Invalid email or password");
+    }
+  };
 
   return (
     <>
@@ -95,7 +133,7 @@ const Signin = () => {
                 </button>
 
                 <button
-                  aria-label="signup with github"
+                  aria-label="signup with Google"
                   className="text-body-color dark:text-body-color-dark dark:shadow-two mb-6 flex w-full items-center justify-center rounded-sm border border-stroke bg-[#f8f8f8] px-6 py-3 text-base outline-none transition-all duration-300 hover:border-primary hover:bg-primary/5 hover:text-primary dark:border-transparent dark:bg-[#2C303B] dark:hover:border-primary dark:hover:bg-primary/5 dark:hover:text-primary dark:hover:shadow-none"
                 >
                   <span className="mr-3">
@@ -121,14 +159,14 @@ const Signin = () => {
               <span className="dark:bg-stroke-dark hidden h-[1px] w-full max-w-[200px] bg-stroke dark:bg-strokedark sm:block"></span>
             </div>
 
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className="mb-7.5 flex flex-col gap-7.5 lg:mb-12.5 lg:flex-row lg:justify-between lg:gap-14">
                 <input
                   type="text"
                   placeholder="Email"
                   name="email"
                   value={data.email}
-                  onChange={(e) => setData({ ...data, email: e.target.value })}
+                  onChange={handleChange}
                   className="w-full border-b border-stroke !bg-white pb-3.5 focus:border-waterloo focus:placeholder:text-black focus-visible:outline-none dark:border-strokedark dark:!bg-black dark:focus:border-manatee dark:focus:placeholder:text-white lg:w-1/2"
                 />
 
@@ -137,9 +175,7 @@ const Signin = () => {
                   placeholder="Password"
                   name="password"
                   value={data.password}
-                  onChange={(e) =>
-                    setData({ ...data, password: e.target.value })
-                  }
+                  onChange={handleChange}
                   className="w-full border-b border-stroke !bg-white pb-3.5 focus:border-waterloo focus:placeholder:text-black focus-visible:outline-none dark:border-strokedark dark:!bg-black dark:focus:border-manatee dark:focus:placeholder:text-white lg:w-1/2"
                 />
               </div>
@@ -183,6 +219,7 @@ const Signin = () => {
                 </div>
 
                 <button
+                  type="submit"
                   aria-label="login with email and password"
                   className="inline-flex items-center gap-2.5 rounded-full bg-black px-6 py-3 font-medium text-white duration-300 ease-in-out hover:bg-blackho dark:bg-btndark dark:hover:bg-blackho"
                 >
